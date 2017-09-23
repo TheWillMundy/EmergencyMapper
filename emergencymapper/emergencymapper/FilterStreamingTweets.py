@@ -2,6 +2,7 @@ import tweepy
 from tweepy import OAuthHandler
 from tweepy import Stream
 from tweepy.streaming import StreamListener
+import json
 
 consumer_key = 'MUeFQrXo2pwep7lXiDYjsIiyD'
 consumer_secret = 'DUaeIPW93O3W6SPF9eusXWchGotiZw06xi0nSEiBSdzYQVdb5W'
@@ -16,9 +17,8 @@ api = tweepy.API(auth)
 class MyListener(StreamListener):
  
     def on_data(self, data):
-        beg = data.index("text")+6
-        end = data.index("source")
-        print data[beg:end+1]
+        tweet_info = json.loads(data)
+        print tweet_info["text"]+"\n"
         return True
  
     def on_error(self, status):
