@@ -1,3 +1,11 @@
 django
 djangorestframework
 django-filter
+numpy
+scipy
+sklearn
+matplotlib
+csv
+pandas
+textblob
+cPickle
