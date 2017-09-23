@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+// Material UI
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 //Imported Components
-import Home from './components/Home.jsx'
+import AppBarComp from './components/AppBarComp.jsx';
+import Home from './components/Home.jsx';
 
 class App extends Component {
   render() {
     return (
-      <Home></Home>
+      <MuiThemeProvider>
+        <div>
+          <AppBarComp />
+          <Home />
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
