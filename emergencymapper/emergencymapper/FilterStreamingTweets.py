@@ -16,7 +16,9 @@ api = tweepy.API(auth)
 class MyListener(StreamListener):
  
     def on_data(self, data):
-        print data
+        beg = data.index("text")+6
+        end = data.index("source")
+        print data[beg:end+1]
         return True
  
     def on_error(self, status):
@@ -24,4 +26,4 @@ class MyListener(StreamListener):
         return True
  
 twitter_stream = Stream(auth, MyListener())
-twitter_stream.filter(track=['hello'])
+twitter_stream.filter(track=['starbucks'])
