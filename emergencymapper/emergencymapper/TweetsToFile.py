@@ -33,8 +33,8 @@ def tweets_to_file(filename, tweetlist):
         txt.write(json.dumps(tweet._json)+"\n")
     txt.close()
 
-cat_search = limited_searchlist("cats AND kittens",10)
-filename = "cats.txt"
+cat_search = limited_searchlist("san andreas fault OR california earthquake OR earthquake OR 5.7 magnitude",100)
+filename = "earthquake.txt"
 cats_txt = open(filename, 'r')
 tweets_to_file(filename, cat_search)
 lines = cats_txt.readlines()
