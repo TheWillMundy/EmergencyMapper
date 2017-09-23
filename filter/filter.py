@@ -60,6 +60,12 @@ def adjust_training_size(messages):
 # print "(row=expected, col=predicted)"
 
 def multinomialnb_accuracy(messages):
+    """
+    Uses sklearn Pipeline to create training model with MultinomialNB Classification, determines cross value scores
+    focusing on accuracy
+
+    Returns accuracy score of model
+    """
     #Pipeline Detector
     msg_train, label_train = adjust_training_size(messages)
     pipeline = Pipeline([
@@ -83,7 +89,17 @@ def multinomialnb_accuracy(messages):
 #SVM Functions
 #Testing with SVM classifier
 def svm_accuracy(messages):
-    msg_train, label_train = adjust_training_size(messages)
+    """
+    Uses sklearn Pipeline to create training model with SVM Classification, creates an SVM grid
+    which can make predictions and filter out messages.
+
+    Saves detector into cPickle file for later use
+    Returns accuracy score obtained by the detector
+    """
+    # Only used for development:
+    # msg_train, label_train = adjust_training_size(messages)
+    msgs = messages['message']
+    labels = messages['label']
     pipeline_svm = Pipeline([
         ('bow', CountVectorizer(analyzer=split_into_lemmas)),
         ('tfidf', TfidfTransformer()),
@@ -102,15 +118,18 @@ def svm_accuracy(messages):
         refit=True,
         scoring='accuracy',
         n_jobs=-1,
-        cv=StratifiedKFold(label_train, n_folds=5),  # what type of cross validation to use
+        cv=StratifiedKFold(labels, n_folds=5),  # what type of cross validation to use
     )
 
-    svm_detector = grid_svm.fit(msg_train, label_train)
+    svm_detector = grid_svm.fit(msgs, labels)
     #Saves SVM Detector to File
     save_detector(svm_detector)
     return svm_detector.grid_scores_
 
 def save_detector(detector):
+    """
+    Saves the Trained Model into a cPicle file for later use
+    """
     #Serialization
     with open('sms_spam_detector.pkl', 'wb') as fout:
         cPickle.dump(detector, fout)
@@ -118,6 +137,10 @@ def save_detector(detector):
     #Reload the SVM Detector
     svm_detector_reloaded = cPickle.load(open('sms_spam_detector.pkl'))
 
+#Exported Variables
+svm_detector = cPickle.load(open('sms_spam_detector.pkl'))
+
+# svm_accuracy(messages)
 #SVM Test
 # svm_accuracy(messages)
 # #Test prediction of SVM Detector
