@@ -25,6 +25,9 @@ messages = open_data()
 message4 = messages['message'][3]
 
 def split_into_lemmas(message):
+    """
+    Splits
+    """
     message = unicode(message, 'utf8').lower()
     words = TextBlob(message).words
     #taking base form of each word -> base form being 'lemma'
@@ -59,32 +62,32 @@ def adjust_training_size(messages):
 # print "Confusion Matrix: \n", confusion_matrix(messages['label'], all_predictions)
 # print "(row=expected, col=predicted)"
 
-def multinomialnb_accuracy(messages):
-    """
-    Uses sklearn Pipeline to create training model with MultinomialNB Classification, determines cross value scores
-    focusing on accuracy
-
-    Returns accuracy score of model
-    """
-    #Pipeline Detector
-    msg_train, label_train = adjust_training_size(messages)
-    pipeline = Pipeline([
-        ('bow', CountVectorizer(analyzer=split_into_lemmas)),  # strings to token integer counts
-        ('tfidf', TfidfTransformer()),  # integer counts to weighted TF-IDF scores
-        ('classifier', MultinomialNB()),  # train on TF-IDF vectors w/ Naive Bayes classifier
-    ])
-
-    scores = cross_val_score(pipeline,  # steps to convert raw messages into models
-                             msg_train,  # training data
-                             label_train,  # training labels
-                             cv=10,  # split data randomly into 10 parts: 9 for training, 1 for scoring
-                             scoring='accuracy',  # which scoring metric?
-                             n_jobs=-1,  # -1 = use all cores = faster
-                             )
-    print scores
-        #Mean and Standard Deviation
-    print scores.mean(), scores.std()
-    return scores
+# def multinomialnb_accuracy(messages):
+#     """
+#     Uses sklearn Pipeline to create training model with MultinomialNB Classification, determines cross value scores
+#     focusing on accuracy
+#
+#     Returns accuracy score of model
+#     """
+#     #Pipeline Detector
+#     msg_train, label_train = adjust_training_size(messages)
+#     pipeline = Pipeline([
+#         ('bow', CountVectorizer(analyzer=split_into_lemmas)),  # strings to token integer counts
+#         ('tfidf', TfidfTransformer()),  # integer counts to weighted TF-IDF scores
+#         ('classifier', MultinomialNB()),  # train on TF-IDF vectors w/ Naive Bayes classifier
+#     ])
+#
+#     scores = cross_val_score(pipeline,  # steps to convert raw messages into models
+#                              msg_train,  # training data
+#                              label_train,  # training labels
+#                              cv=10,  # split data randomly into 10 parts: 9 for training, 1 for scoring
+#                              scoring='accuracy',  # which scoring metric?
+#                              n_jobs=-1,  # -1 = use all cores = faster
+#                              )
+#     print scores
+#         #Mean and Standard Deviation
+#     print scores.mean(), scores.std()
+#     return scores
 
 #SVM Functions
 #Testing with SVM classifier
@@ -137,8 +140,10 @@ def save_detector(detector):
     #Reload the SVM Detector
     svm_detector_reloaded = cPickle.load(open('sms_spam_detector.pkl'))
 
+def get_detector():
+    return cPickle.load(open('sms_spam_detector.pkl'))
 #Exported Variables
-svm_detector = cPickle.load(open('sms_spam_detector.pkl'))
+# svm_detector = cPickle.load(open('sms_spam_detector.pkl'))
 
 # svm_accuracy(messages)
 #SVM Test
