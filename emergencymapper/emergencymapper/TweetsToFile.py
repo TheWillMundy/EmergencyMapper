@@ -16,14 +16,19 @@ api = tweepy.API(auth, wait_on_rate_limit = True, wait_on_rate_limit_notify = Tr
 
 def limited_searchlist(query, limit):
     results = []
-    for result in tweepy.Cursor(api.search,q = query).items(limit):
-        results.append(result)
+    for result in tweepy.Cursor(api.search,q = query).items():
+        print len(results)
+        if not result.retweeted and "RT @" not in result.text:
+            results.append(result)
+        if len(results)>=limit:
+            break
     return results
 
 def unlimited_searchlist(query):
     results = []
     for result in tweepy.Cursor(api.search,q = query).items():
-        results.append(result)
+        if not result.retweeted and "RT @" not in result.text:
+            results.append(result)
     return results
 
 def tweets_to_file(filename, tweetlist):
@@ -33,17 +38,17 @@ def tweets_to_file(filename, tweetlist):
         txt.write(json.dumps(tweet._json)+"\n")
     txt.close()
 
-cat_search = limited_searchlist("cats AND kittens",10)
-filename = "cats.txt"
-cats_txt = open(filename, 'r')
-tweets_to_file(filename, cat_search)
-lines = cats_txt.readlines()
+##search = limited_searchlist("earthquake california OR strikes",10)
+##filename = "earthquakes.txt"
+##cats_txt = open(filename, 'r')
+##tweets_to_file(filename, search)
+##lines = cats_txt.readlines()
+##
+##for line in lines:
+##    tweet = json.loads(line)
+####    if tweet["user"]["geo_enabled"] and tweet["place"] != None:
+##    print tweet["user"]["name"]+"(@"+tweet["user"]["screen_name"]+"): "+ tweet["text"]
+####        print tweet["place"]["full_name"]
+##    print "==========================================="
 
-for line in lines:
-      tweet = json.loads(line)
-##    if tweet["user"]["geo_enabled"] and tweet["place"] != None:
-      print tweet["user"]["name"]+"(@"+tweet["user"]["screen_name"]+"): "+ tweet["text"]
-##        print tweet["place"]["full_name"]
-##        print "==========================================="
-
-cats_txt.close()
+##cats_txt.close()
