@@ -1,5 +1,3 @@
 django
 djangorestframework
 django-filter
-numpy
-scipy
