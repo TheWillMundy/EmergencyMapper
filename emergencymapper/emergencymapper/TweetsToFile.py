@@ -38,17 +38,17 @@ def tweets_to_file(filename, tweetlist):
         txt.write(json.dumps(tweet._json)+"\n")
     txt.close()
 
-##search = limited_searchlist("earthquake california OR strikes",10)
-##filename = "earthquakes.txt"
-##cats_txt = open(filename, 'r')
-##tweets_to_file(filename, search)
-##lines = cats_txt.readlines()
-##
-##for line in lines:
-##    tweet = json.loads(line)
-####    if tweet["user"]["geo_enabled"] and tweet["place"] != None:
-##    print tweet["user"]["name"]+"(@"+tweet["user"]["screen_name"]+"): "+ tweet["text"]
-####        print tweet["place"]["full_name"]
-##    print "==========================================="
+cat_search = limited_searchlist("san andreas fault OR california earthquake OR earthquake OR 5.7 magnitude",100)
+filename = "earthquake.txt"
+cats_txt = open(filename, 'r')
+tweets_to_file(filename, cat_search)
+lines = cats_txt.readlines()
 
-##cats_txt.close()
+for line in lines:
+      tweet = json.loads(line)
+##    if tweet["user"]["geo_enabled"] and tweet["place"] != None:
+      print tweet["user"]["name"]+"(@"+tweet["user"]["screen_name"]+"): "+ tweet["text"]
+##        print tweet["place"]["full_name"]
+##        print "==========================================="
+
+cats_txt.close()
