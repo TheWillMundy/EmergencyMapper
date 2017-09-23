@@ -3,7 +3,7 @@ djangorestframework
 django-filter
 numpy
 scipy
-sklearn
+scikit-learn
 matplotlib
 csv
 pandas
