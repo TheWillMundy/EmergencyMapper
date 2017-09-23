@@ -18,26 +18,31 @@ def limited_searchlist(query, limit):
     results = []
     for result in tweepy.Cursor(api.search,q = query).items(limit):
         results.append(result)
+    return results
 
 def unlimited_searchlist(query):
     results = []
     for result in tweepy.Cursor(api.search,q = query).items():
         results.append(result)
+    return results
 
-def tweets_to_file(filename,tweetlist):
+def tweets_to_file(filename, tweetlist):
     txt = open(filename, 'w')
     txt.truncate()
     for tweet in tweetlist:
         txt.write(json.dumps(tweet._json)+"\n")
     txt.close()
 
-cats_txt = open('<filename>.txt', 'r')
+cat_search = limited_searchlist("cats AND kittens",10)
+filename = "cats.txt"
+cats_txt = open(filename, 'r')
+tweets_to_file(filename, cat_search)
 lines = cats_txt.readlines()
 
-##for line in lines:
-##    tweet = json.loads(line)
+for line in lines:
+      tweet = json.loads(line)
 ##    if tweet["user"]["geo_enabled"] and tweet["place"] != None:
-##        print tweet["user"]["name"]+"(@"+tweet["user"]["screen_name"]+"): "+ tweet["text"]
+      print tweet["user"]["name"]+"(@"+tweet["user"]["screen_name"]+"): "+ tweet["text"]
 ##        print tweet["place"]["full_name"]
 ##        print "==========================================="
 
