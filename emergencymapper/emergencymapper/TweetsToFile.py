@@ -17,7 +17,6 @@ api = tweepy.API(auth, wait_on_rate_limit = True, wait_on_rate_limit_notify = Tr
 def limited_searchlist(query, limit):
     results = []
     for result in tweepy.Cursor(api.search,q = query).items():
-        print len(results)
         if not result.retweeted and "RT @" not in result.text:
             results.append(result)
         if len(results)>=limit:
@@ -36,4 +35,12 @@ def tweets_to_file(filename, tweetlist):
     txt.truncate()
     for tweet in tweetlist:
         txt.write(json.dumps(tweet._json)+"\n")
+    txt.close()
+
+def texts_to_file(filename, tweetlist):
+    txt = open(filename, 'w')
+    txt.truncate()
+    for tweet in tweetlist:
+        content = "".join(tweet._json["text"].splitlines())
+        txt.write(content.encode("UTF-8")+"\n")
     txt.close()

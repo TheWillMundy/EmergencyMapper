@@ -19,22 +19,29 @@ searches = {}
 def add_search(filename,search):
     searches[filename] = search
 
-
-add_search("earthquakes.txt",
-           limited_searchlist("san andreas fault OR\
+add_search(
+            "earthquakes.txt",
+            limited_searchlist("san andreas fault OR\
                                california earthquake OR\
                                earthquake OR\
-                               5.7 magnitude",100))
+                               5.7 magnitude",100)
+           )
+add_search(
+            "flooding.txt",
+            limited_searchlist("flood flooding OR\
+                                  warning OR danger OR\
+                                  damage OR flash",200)
+           )
 
 for filename, search in searches.items():
-    tweets_to_file(filename, search)
+    texts_to_file(filename, search)
 
     txt = open(filename, 'r')
     lines = txt.readlines()
-    print len(lines)
-    for line in lines:
-        tweet = json.loads(line)
-        print tweet["user"]["name"]+"(@"+tweet["user"]["screen_name"]+"): "+ tweet["text"]
-        print "==========================================="
+    print filename+":",len(lines)
+##    for line in lines:
+##        tweet = json.loads(line)
+##        print tweet["user"]["name"]+"(@"+tweet["user"]["screen_name"]+"): "+ tweet["text"]
+##        print "==========================================="
 
     txt.close()
