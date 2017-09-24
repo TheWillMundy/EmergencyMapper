@@ -4,6 +4,7 @@ from tweepy import Stream
 from tweepy.streaming import StreamListener
 import json
 from TweetsToFile import *
+from OTLIstMaker import *
 
 consumer_key = 'MUeFQrXo2pwep7lXiDYjsIiyD'
 consumer_secret = 'DUaeIPW93O3W6SPF9eusXWchGotiZw06xi0nSEiBSdzYQVdb5W'
@@ -40,6 +41,10 @@ add_search(
                                 -crisis -emergency",200)
            )
 '''
+add_search(
+            "harvey.txt",
+            old_tweet_tweetlist("#harvey","2017-08-24","2017-08-29",100)
+           )
 
 for filename, search in searches.items():
     texts_to_file(filename, search)

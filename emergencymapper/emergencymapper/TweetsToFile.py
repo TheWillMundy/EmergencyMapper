@@ -42,5 +42,5 @@ def texts_to_file(filename, tweetlist):
     txt.truncate()
     for tweet in tweetlist:
         content = "".join(tweet._json["text"].splitlines())
-        txt.write(content.encode("UTF-8")+"\t\n")
+        txt.write("\t"+content.encode("UTF-8")+"\n")
     txt.close()
