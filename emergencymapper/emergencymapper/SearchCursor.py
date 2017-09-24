@@ -18,12 +18,19 @@ api = tweepy.API(auth, wait_on_rate_limit = True, wait_on_rate_limit_notify = Tr
 ##    tweet = status._json
 ##    print tweet["text"]+"\n"
 
-counter = 0
-for result in tweepy.Cursor(api.search,q = "hurricane harvey").items():
-##    tweet = result._json
-##    print tweet["text"]+"\n"
-    counter += 1
-    if counter % 100 == 0:
-        print counter,"tweets"
+##counter = 0
+##for result in tweepy.Cursor(api.search,q = "hurricane harvey").items():
+####    tweet = result._json
+####    print tweet["text"]+"\n"
+results = []
+for result in tweepy.Cursor(api.search,q = "cats until:2017-09-15").items(10):
+    results.append(result)
+##print len(results)
+##if len(results)>0:
+##    print results[-1]._json["created_at"]
 
-print counter
+cats_txt = open('cats.txt', 'w')
+for result in results:
+    cats_txt.write(result.__str__)
+cats_txt.close()
+    
