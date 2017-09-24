@@ -1,3 +1,4 @@
+#GetOldTweets - python by Jefferson Henrique
 import urllib,urllib2,json,re,datetime,sys,cookielib
 from .. import models
 from pyquery import PyQuery

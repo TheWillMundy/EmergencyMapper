@@ -1,3 +1,4 @@
+#GetOldTweets - python by Jefferson Henrique
 class TweetCriteria:
 	
 	def __init__(self):
