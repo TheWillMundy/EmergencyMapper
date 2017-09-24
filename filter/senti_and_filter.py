@@ -16,6 +16,8 @@ for message in messages['message']:
         message_label = messages['label'][message_index]
         expected_label = message_label
         predicted_label = detector.predict([message])
+        print "Expected", expected_label
+        print "Predicted", predicted_label
         # if (expected_label != predicted_label):
         #     print "Text: {:-<65}, Senti: {}".format(message, str(compound_score))
         #     print "Expected: {}, Actual: {}".format(expected_label, predicted_label)

@@ -14,15 +14,20 @@ from sklearn.grid_search import GridSearchCV
 from sklearn.cross_validation import StratifiedKFold, cross_val_score, train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.learning_curve import learning_curve
+import re
+import sys
 
 #General Functions
 def open_data():
-    return pandas.read_csv('./data/SMSSpamCollection', sep="\t", quoting=csv.QUOTE_NONE, names=["label", "message"])
+    return pandas.read_csv('./data/hamnspam.txt', sep="\t", quoting=csv.QUOTE_NONE, names=["label", "message"])
 
 #General Variables
     #Message 4 for testing
 messages = open_data()
 message4 = messages['message'][3]
+
+def prune_text(message):
+    return re.sub(r'\W', ' ', message)
 
 def split_into_lemmas(message):
     """
@@ -37,6 +42,7 @@ def adjust_training_size(messages):
     msg_train, msg_test, label_train, label_test = \
         train_test_split(messages['message'], messages['label'], test_size=0.2)
     return msg_train, label_train
+
 
 #MultinomialNB Functions
 # bow_transformer = CountVectorizer(analyzer=split_into_lemmas).fit(messages['message'])
@@ -101,6 +107,16 @@ def svm_accuracy(messages):
     """
     # Only used for development:
     # msg_train, label_train = adjust_training_size(messages)
+    #Indexing
+    all_messages = pandas.Index(messages['message'])
+    counter = 0
+    for label, message in messages['message'].iteritems():
+        message_index = all_messages.get_loc(message)
+        try:
+            messages['message'].set_value(message_index, prune_text(message))
+        except:
+            messages['message'].set_value(counter, prune_text(message))
+        counter += 1
     msgs = messages['message']
     labels = messages['label']
     pipeline_svm = Pipeline([
@@ -141,7 +157,10 @@ def save_detector(detector):
     svm_detector_reloaded = cPickle.load(open('sms_spam_detector.pkl'))
 
 def get_detector():
+    print "Running"
     return cPickle.load(open('sms_spam_detector.pkl'))
+
+# svm_accuracy(messages)
 #Exported Variables
 # svm_detector = cPickle.load(open('sms_spam_detector.pkl'))
 
