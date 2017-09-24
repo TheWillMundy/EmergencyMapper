@@ -19,7 +19,7 @@ import sys
 
 #General Functions
 def open_data():
-    return pandas.read_csv('./data/misc_reverseu.txt', sep="\t", quoting=csv.QUOTE_NONE, names=["label", "message"])
+    return pandas.read_csv('./data/hamnspam.txt', sep="\t", quoting=csv.QUOTE_NONE, names=["label", "message"])
 
 #General Variables
     #Message 4 for testing
@@ -109,10 +109,14 @@ def svm_accuracy(messages):
     # msg_train, label_train = adjust_training_size(messages)
     #Indexing
     all_messages = pandas.Index(messages['message'])
+    counter = 0
     for label, message in messages['message'].iteritems():
         message_index = all_messages.get_loc(message)
-        messages['message'].set_value(message_index, prune_text(message))
-
+        try:
+            messages['message'].set_value(message_index, prune_text(message))
+        except:
+            messages['message'].set_value(counter, prune_text(message))
+        counter += 1
     msgs = messages['message']
     labels = messages['label']
     pipeline_svm = Pipeline([
