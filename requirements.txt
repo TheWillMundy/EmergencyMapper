@@ -1,3 +1,5 @@
 django
 djangorestframework
 django-filter
+lxml==3.5.0
+pyquery==1.2.10

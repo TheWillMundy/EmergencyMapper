@@ -1,9 +1,11 @@
 library(shiny)
 library(leaflet)
 library(maps)
-interactive()
 
 ui <- fluidPage(
+      sidebarPanel(
+                   h1('Narrow your search:'), 
+                   textInput('state', 'Input state in continental US'),
       tags$head(tags$style(
         HTML('
              #outerpan {background-color: rgba(255,255,255,0.8); padding:1%}
@@ -28,6 +30,19 @@ ui <- fluidPage(
                      ),
                      br(),
                      radioButtons('show', 'Highlight county?', choices = c("Yes", "No")),
+                     actionButton('countysubmit', 'Submit')
+                     
+                     
+                   )
+                   
+      ),
+      
+      mainPanel(
+        leafletOutput("CountyMap", width = 1000, height = 500)
+      )
+)
+
+server <- function(input, output, session){
                      actionButton('countysubmit', 'Submit'),
                      br(),
                      p('Click and drag panel to move it')
@@ -49,6 +64,12 @@ server <- function(input, output, session){
           opac <- 0.1
         }
         else{opac <- 0}
+
+        County <- map('county',input$county, fill = TRUE, plot = FALSE, exact = TRUE)
+        
+        leaflet(County) %>% addTiles() %>%
+          fitBounds(County$range[1], County$range[3], County$range[2], County$range[4])%>%
+          addPolygons(fillOpacity = opac, smoothFactor = 0.5, stroke = FALSE, weight = 1)
         County <- map('county',input$county, fill = TRUE, plot = FALSE, exact = TRUE)
 
         leaflet(County) %>% addTiles() %>%
