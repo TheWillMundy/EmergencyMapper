@@ -1,3 +1,4 @@
+#GetOldTweets - python by Jefferson Henrique
 # -*- coding: utf-8 -*-
 import sys,getopt,datetime,codecs
 if sys.version_info[0] < 3:
