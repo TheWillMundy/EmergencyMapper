@@ -18,7 +18,7 @@ api = tweepy.API(auth, wait_on_rate_limit = True, wait_on_rate_limit_notify = Tr
 searches = {}
 def add_search(filename,search):
     searches[filename] = search
-
+'''
 add_search(
             "earthquakes.txt",
             limited_searchlist("san andreas fault OR\
@@ -29,9 +29,11 @@ add_search(
 add_search(
             "flooding.txt",
             limited_searchlist("flood flooding OR\
-                                  warning OR danger OR\
-                                  damage OR flash",200)
+                                warning OR danger OR\
+                                damage OR flash OR\
+                                storm",200)
            )
+'''
 
 for filename, search in searches.items():
     texts_to_file(filename, search)
