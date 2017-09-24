@@ -23,4 +23,8 @@ def old_tweet_tweetlist(query,start_date,end_date,limit):
                 real_tweet = api.get_status(tweet.id)
                 if not real_tweet.retweeted and "RT @" not in real_tweet.text:
                     tweets.append(real_tweet)
+<<<<<<< HEAD
+=======
+                print len(tweets)
+>>>>>>> 1c1031b1701af117c4bdfcf69e2dce7d07b47e6d
         return tweets
