@@ -40,11 +40,35 @@ add_search(
                                 -earthquake -danger -disaster\
                                 -crisis -emergency",200)
            )
-'''
 add_search(
             "harvey.txt",
             old_tweet_tweetlist("#harvey","2017-08-24","2017-08-29",100)
            )
+add_search(
+            "irma1.txt",
+            old_tweet_tweetlist("#hurricaneirma",
+                                "2017-09-09","2017-09-11",100)
+           )
+add_search(
+            "irma2.txt",
+            old_tweet_tweetlist("#hurricaneirma",
+                                "2017-09-11","2017-09-13",100)
+           )
+add_search(
+            "harveyhelp.txt",
+            old_tweet_tweetlist("#houstonhelpneeded","2017-08-28","2017-08-29",100)
+           )
+
+add_search(
+            "irmasos.txt",
+            old_tweet_tweetlist("#irmasos","2017-09-09","2017-09-12",100)
+           )
+'''
+add_search(
+            "irmarescue.txt",
+            old_tweet_tweetlist("#irmarescue","2017-09-09","2017-09-12",100)
+           )
+
 
 for filename, search in searches.items():
     texts_to_file(filename, search)
