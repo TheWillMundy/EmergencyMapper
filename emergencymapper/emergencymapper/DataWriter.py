@@ -33,6 +33,12 @@ add_search(
                                 damage OR flash OR\
                                 storm",200)
            )
+add_search(
+            "misc.txt",
+            limited_searchlist("the -hurricane -flooding\
+                                -earthquake -danger -disaster\
+                                -crisis -emergency",200)
+           )
 '''
 
 for filename, search in searches.items():
