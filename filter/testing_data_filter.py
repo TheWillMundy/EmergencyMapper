@@ -10,7 +10,7 @@ messages = training_set.messages
 detector = training_set.get_detector()
 
 def data_open():
-    return pandas.read_csv('./data/stream.txt', sep="\t", quoting=csv.QUOTE_NONE, names=["label", "message"])
+    return pandas.read_csv('./data/testing_data.txt', sep="\t", quoting=csv.QUOTE_NONE, names=["label", "message"])
 
 testing_data = data_open()
 expect_predict = []

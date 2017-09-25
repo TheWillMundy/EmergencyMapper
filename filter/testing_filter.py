@@ -14,7 +14,7 @@ test_message3 = "Being reminded to pray for all the loss and recovery from Harve
 test_label3 = "spam"
 test_message4 = "If anyone in the Port Arthur area can help, my cousin is trapped at 2320  E 17th street. Four adults and two kids."
 test_label4 = "ham"
-test_message5 = "Please, my family needs help so much. One Bellaire Road."
+test_message5 = "Please, my family needs help so much. One Bellaire Road. They have 3 kids and 4 pets and are devastated"
 test_label5 = "ham"
 print messages['message'][19]
 print "Expected: ", messages['label'][19]
